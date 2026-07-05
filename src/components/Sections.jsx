@@ -1,4 +1,4 @@
-import { Reveal, RotatingBadge } from "./shared.jsx";
+import { Reveal, RotatingBadge, SplitText, ParallaxImg, TiltCard } from "./shared.jsx";
 
 const InlineImg = ({ src, alt }) => (
   <span className="inline-img">
@@ -35,7 +35,7 @@ export function Experience() {
       <div className="container">
         <div className="exp-head">
           <Reveal as="p" className="kicker">The studio</Reveal>
-          <Reveal as="h2" className="display" delay={1}>Our experience</Reveal>
+          <SplitText as="h2" className="display" text="Our experience" />
           <Reveal as="span" className="script" delay={2}>in frames</Reveal>
         </div>
         <div className="exp-grid">
@@ -74,31 +74,32 @@ const WORK = [
   { cls: "wide", tag: "Celebration — Fremantle", src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1600&auto=format&fit=crop", alt: "Friends celebrating with sparklers at night" },
 ];
 
+const WorkItem = ({ w, delay }) => (
+  <Reveal as="figure" className={`p-item ${w.cls}`} delay={delay}>
+    <ParallaxImg src={w.src} alt={w.alt} strength={w.cls === "tall" ? 9 : 6} />
+    <figcaption className="p-tag">{w.tag}</figcaption>
+  </Reveal>
+);
+
 export function Portfolio() {
   return (
     <section id="work">
       <div className="container">
         <div className="exp-head">
           <Reveal as="p" className="kicker">Portfolio</Reveal>
-          <Reveal as="h2" className="display" delay={1}>Work that stands</Reveal>
+          <SplitText as="h2" className="display" text="Work that stands" />
           <Reveal as="span" className="script" delay={2}>the test of time</Reveal>
         </div>
         <div className="portfolio-grid">
           {WORK.slice(0, 3).map((w, i) => (
-            <Reveal as="figure" key={w.tag} className={`p-item ${w.cls}`} delay={i}>
-              <img src={w.src} alt={w.alt} loading="lazy" />
-              <figcaption className="p-tag">{w.tag}</figcaption>
-            </Reveal>
+            <WorkItem key={w.tag} w={w} delay={i} />
           ))}
           <Reveal className="p-text" delay={3}>
             <h3>Every day worth keeping</h3>
             <RotatingBadge text="create your own story · create your own story · " />
           </Reveal>
           {WORK.slice(3).map((w, i) => (
-            <Reveal as="figure" key={w.tag} className={`p-item ${w.cls}`} delay={i}>
-              <img src={w.src} alt={w.alt} loading="lazy" />
-              <figcaption className="p-tag">{w.tag}</figcaption>
-            </Reveal>
+            <WorkItem key={w.tag} w={w} delay={i} />
           ))}
         </div>
       </div>
@@ -136,19 +137,21 @@ export function Services() {
       <div className="container">
         <div className="exp-head">
           <Reveal as="p" className="kicker">Services</Reveal>
-          <Reveal as="h2" className="display" delay={1}>Three ways</Reveal>
+          <SplitText as="h2" className="display" text="Three ways" />
           <Reveal as="span" className="script" delay={2}>to book</Reveal>
         </div>
         <div className="svc-grid">
           {SERVICES.map((s, i) => (
-            <Reveal className="svc" key={s.title} delay={i}>
-              <p className="kicker">{s.kicker}</p>
-              <h3>{s.title}</h3>
-              <p>{s.copy}</p>
-              <div className="price">
-                {s.price}
-                <small>{s.note}</small>
-              </div>
+            <Reveal key={s.title} delay={i}>
+              <TiltCard className="svc">
+                <p className="kicker">{s.kicker}</p>
+                <h3>{s.title}</h3>
+                <p>{s.copy}</p>
+                <div className="price">
+                  {s.price}
+                  <small>{s.note}</small>
+                </div>
+              </TiltCard>
             </Reveal>
           ))}
         </div>
