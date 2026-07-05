@@ -14,7 +14,7 @@ export function Contact() {
 
   const send = () => {
     if (!form.name || !form.email) return;
-    const subject = encodeURIComponent(`Enquiry — ${form.type}`);
+    const subject = encodeURIComponent(`Enquiry: ${form.type}`);
     const body = encodeURIComponent(
       `Hi jshoots,\n\nName: ${form.name}\nEmail: ${form.email}\nShoot type: ${form.type}\nRough date: ${form.date || "TBC"}\n\nThe plan:\n${form.message}\n`
     );
@@ -29,9 +29,9 @@ export function Contact() {
           <Reveal as="h2" className="display" delay={1}>Ready</Reveal>
           <Reveal as="span" className="script" delay={2}>when you are.</Reveal>
           <Reveal as="p" delay={3}>
-            Tell us what you're planning — a rough date and a rough idea is
-            plenty. We'll come back with a plan and a quote, usually within a
-            day.
+            Tell us what you're planning. A rough date and a rough idea is
+            plenty, and we'll come back with a plan and a quote, usually
+            within a day.
           </Reveal>
           <Reveal className="contact-lines" delay={4}>
             <span className="label">Email</span>
@@ -77,7 +77,7 @@ export function Contact() {
             Send enquiry ↗
           </button>
           <p className="form-note">
-            Opens a pre-filled email to hello@jshoots.com.au — nothing is stored on this page.
+            Opens a pre-filled email to hello@jshoots.com.au. Nothing is stored on this page.
           </p>
         </Reveal>
       </div>
@@ -89,7 +89,7 @@ export function Footer() {
   return (
     <footer>
       <div className="container footer-inner">
-        <p>© 2026 jshoots — Perth, Western Australia. On-location only.</p>
+        <p>© 2026 jshoots, Perth WA. On-location shoots only.</p>
         <div className="footer-social">
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
           <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>

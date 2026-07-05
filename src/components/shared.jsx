@@ -35,31 +35,38 @@ export function Reveal({ children, as = "div", className = "", delay = 0, ...res
   );
 }
 
-/* Word-by-word masked text reveal. Pass "\n" in text for line breaks. */
+/* Word-by-word masked text reveal. Pass "\n" in text for line breaks.
+   The in-view observer must sit on the heading itself: the words start
+   fully clipped by their overflow-hidden line, so observing them directly
+   never fires. */
 export function SplitText({ text, as = "h2", className = "", delay = 0 }) {
   const reduce = useReducedMotion();
-  const Tag = as;
-  let w = 0;
+  const Tag = motion[as] || motion.h2;
+  const container = {
+    hidden: {},
+    show: { transition: { delayChildren: delay, staggerChildren: 0.07 } },
+  };
+  const wordVariant = {
+    hidden: reduce ? { y: "0%", rotate: 0, opacity: 1 } : { y: "112%", rotate: 5, opacity: 0 },
+    show: { y: "0%", rotate: 0, opacity: 1, transition: { duration: 0.9, ease: EASE } },
+  };
   return (
-    <Tag className={className} aria-label={text.replaceAll("\n", " ")}>
+    <Tag
+      className={className}
+      aria-label={text.replaceAll("\n", " ")}
+      variants={container}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-60px" }}
+    >
       {text.split("\n").map((line, li) => (
         <span className="split-line" key={li} aria-hidden="true">
-          {line.split(" ").map((word, wi, arr) => {
-            const i = w++;
-            return (
-              <motion.span
-                className="split-word"
-                key={wi}
-                initial={reduce ? false : { y: "112%", rotate: 5, opacity: 0 }}
-                whileInView={{ y: "0%", rotate: 0, opacity: 1 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.9, ease: EASE, delay: delay + i * 0.07 }}
-              >
-                {word}
-                {wi < arr.length - 1 ? " " : ""}
-              </motion.span>
-            );
-          })}
+          {line.split(" ").map((word, wi, arr) => (
+            <motion.span className="split-word" key={wi} variants={wordVariant}>
+              {word}
+              {wi < arr.length - 1 ? " " : ""}
+            </motion.span>
+          ))}
         </span>
       ))}
     </Tag>

@@ -16,7 +16,7 @@ export function Statement() {
             src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop"
             alt="Candid portrait"
           />
-          can't be staged — a kid mid-laugh, a quiet look between two people,{" "}
+          can't be staged. A kid mid-laugh, a quiet look between two people,{" "}
           <InlineImg
             src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400&auto=format&fit=crop"
             alt="Event moment with confetti"
@@ -45,14 +45,14 @@ export function Experience() {
           </Reveal>
           <Reveal className="stat" delay={1}>
             <b>$299</b>
-            <span>Sessions from — no hidden extras</span>
+            <span>Sessions start here, no hidden extras</span>
           </Reveal>
           <Reveal className="stat" delay={2}>
             <b>1:1</b>
             <span>Same photographer, start to finish</span>
           </Reveal>
           <Reveal as="p" className="exp-note" delay={3}>
-            jshoots doesn't have a studio you have to come to — and that's the
+            jshoots doesn't have a studio you have to come to, and that's the
             point. Kids relax at home. Couples loosen up on their own beach.
             Event coverage lands better when the photographer already knows the
             room. We travel anywhere across Perth and surrounds, we know the
@@ -66,12 +66,12 @@ export function Experience() {
 }
 
 const WORK = [
-  { cls: "tall", tag: "Wedding — Swan Valley", src: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop", alt: "Bride and groom walking together" },
-  { cls: "", tag: "Family — Cottesloe", src: "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1000&auto=format&fit=crop", alt: "Family laughing together outdoors" },
-  { cls: "wide", tag: "Corporate — Perth CBD", src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1600&auto=format&fit=crop", alt: "Corporate conference in session" },
-  { cls: "", tag: "Graduation — UWA", src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1000&auto=format&fit=crop", alt: "Graduates throwing caps" },
-  { cls: "", tag: "Portraits — On location", src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop", alt: "Natural light portrait" },
-  { cls: "wide", tag: "Celebration — Fremantle", src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1600&auto=format&fit=crop", alt: "Friends celebrating with sparklers at night" },
+  { cls: "tall", tag: "Wedding · Swan Valley", src: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop", alt: "Bride and groom walking together" },
+  { cls: "", tag: "Family · Cottesloe", src: "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1000&auto=format&fit=crop", alt: "Family laughing together outdoors" },
+  { cls: "wide", tag: "Corporate · Perth CBD", src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1600&auto=format&fit=crop", alt: "Corporate conference in session" },
+  { cls: "", tag: "Graduation · UWA", src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1000&auto=format&fit=crop", alt: "Graduates throwing caps" },
+  { cls: "", tag: "Portraits · On location", src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop", alt: "Natural light portrait" },
+  { cls: "wide", tag: "Celebration · Fremantle", src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1600&auto=format&fit=crop", alt: "Friends celebrating with sparklers at night" },
 ];
 
 const WorkItem = ({ w, delay }) => (
@@ -109,23 +109,23 @@ export function Portfolio() {
 
 const SERVICES = [
   {
-    kicker: "01 — Portraits",
+    kicker: "01 · Portraits",
     title: "Family & Portraits",
-    copy: "Families, newborns, couples and professional headshots. No stiff poses under studio lights — just you, at ease, somewhere you actually like being.",
+    copy: "Families, newborns, couples and professional headshots. No stiff poses under studio lights. Just you, at ease, somewhere you actually like being.",
     price: "From $299",
     note: "Gallery in 10 days",
   },
   {
-    kicker: "02 — Milestones",
+    kicker: "02 · Milestones",
     title: "Weddings & Milestones",
-    copy: "Weddings, birthdays, graduations and christenings. The days you only get once — photographed properly, without anyone being told to say cheese.",
+    copy: "Weddings, birthdays, graduations and christenings. These are the days you only get once, so we photograph them properly. Nobody gets told to say cheese.",
     price: "From $299",
     note: "Gallery in 10 days",
   },
   {
-    kicker: "03 — Events",
+    kicker: "03 · Events",
     title: "Corporate & Events",
-    copy: "Corporate functions, community events, launches and award nights. We know the brief before we show up — run sheets, key people, must-have shots.",
+    copy: "Corporate functions, community events, launches and award nights. Send us the run sheet and the key people, and we'll know the brief before we arrive.",
     price: "Scoped to your brief",
     note: "Tell us the shape of the night",
   },

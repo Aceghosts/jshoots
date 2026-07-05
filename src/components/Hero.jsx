@@ -85,8 +85,8 @@ export function Hero() {
 
         <div className="hero-bottom">
           <motion.p className="hero-sub" {...stagger(5)}>
-            On-location photography across Perth &amp; surrounds — families,
-            milestones and corporate events, delivered as full galleries
+            On-location photography across Perth and surrounds. Families,
+            milestones and corporate events, with your full gallery delivered
             within ten days.
           </motion.p>
           <motion.div className="hero-badge" {...stagger(6)}>
