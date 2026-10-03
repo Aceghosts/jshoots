@@ -142,13 +142,17 @@ export function Gallery() {
             </Reveal>
           ))}
         </div>
-        {!showAll && (
-          <div className="see-more-wrap">
-            <button className="pill" onClick={() => setShowAll(true)}>
-              See more
-            </button>
-          </div>
-        )}
+        <div className="see-more-wrap">
+          <button
+            className="pill"
+            onClick={() => {
+              if (showAll) document.getElementById("gallery").scrollIntoView({ behavior: "smooth" });
+              setShowAll(!showAll);
+            }}
+          >
+            {showAll ? "See less" : "See more"}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
