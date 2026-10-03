@@ -113,6 +113,8 @@ const CLICKS = Array.from({ length: 27 }, (_, i) => `/images/${i + 1}.jpg`);
 
 export function Gallery() {
   const [sel, setSel] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+  const shown = showAll ? CLICKS : CLICKS.slice(0, 6);
 
   useEffect(() => {
     if (sel === null) return;
@@ -134,12 +136,19 @@ export function Gallery() {
           <Reveal as="span" className="script" delay={2}>straight off the camera</Reveal>
         </div>
         <div className="clicks-grid">
-          {CLICKS.map((src, i) => (
+          {shown.map((src, i) => (
             <Reveal key={src} as="button" className="click-item" delay={i % 3} onClick={() => setSel(i)} aria-label={`View photo ${i + 1} full size`}>
               <img src={src} alt={`jshoots photo ${i + 1}`} loading="lazy" />
             </Reveal>
           ))}
         </div>
+        {!showAll && (
+          <div className="see-more-wrap">
+            <button className="pill" onClick={() => setShowAll(true)}>
+              See more
+            </button>
+          </div>
+        )}
       </div>
 
       <AnimatePresence>
