@@ -6,6 +6,24 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 5173
+    },
+    {
+      "name": "hassaan-portfolio",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "D:/ABBAS/WORK/CLAUDE/hassaan-ali", "-l", "5178"],
+      "port": 5178
+    },
+    {
+      "name": "evaluation-website",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "D:/ABBAS/WORK/CLAUDE/evaluation-site", "-l", "5179"],
+      "port": 5179
+    },
+    {
+      "name": "campaign-vault",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "D:/ABBAS/WORK/CLAUDE/campaign-vault", "-l", "5180"],
+      "port": 5180
     }
   ]
 }

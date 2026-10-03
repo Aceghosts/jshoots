@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Reveal, RotatingBadge, SplitText, ParallaxImg, TiltCard } from "./shared.jsx";
 
 const InlineImg = ({ src, alt }) => (
@@ -103,6 +105,67 @@ export function Portfolio() {
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+const CLICKS = Array.from({ length: 27 }, (_, i) => `/images/${i + 1}.jpg`);
+
+export function Gallery() {
+  const [sel, setSel] = useState(null);
+
+  useEffect(() => {
+    if (sel === null) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setSel(null);
+      if (e.key === "ArrowRight") setSel((s) => (s + 1) % CLICKS.length);
+      if (e.key === "ArrowLeft") setSel((s) => (s - 1 + CLICKS.length) % CLICKS.length);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [sel]);
+
+  return (
+    <section className="gallery" id="gallery">
+      <div className="container">
+        <div className="exp-head">
+          <Reveal as="p" className="kicker">Gallery</Reveal>
+          <SplitText as="h2" className="display" text="Recent clicks" />
+          <Reveal as="span" className="script" delay={2}>straight off the camera</Reveal>
+        </div>
+        <div className="clicks-grid">
+          {CLICKS.map((src, i) => (
+            <Reveal key={src} as="button" className="click-item" delay={i % 3} onClick={() => setSel(i)} aria-label={`View photo ${i + 1} full size`}>
+              <img src={src} alt={`jshoots photo ${i + 1}`} loading="lazy" />
+            </Reveal>
+          ))}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {sel !== null && (
+          <motion.div
+            className="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSel(null)}
+          >
+            <motion.img
+              key={sel}
+              src={CLICKS[sel]}
+              alt={`jshoots photo ${sel + 1} full size`}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button className="lb-btn lb-prev" aria-label="Previous photo" onClick={(e) => { e.stopPropagation(); setSel((sel - 1 + CLICKS.length) % CLICKS.length); }}>←</button>
+            <button className="lb-btn lb-next" aria-label="Next photo" onClick={(e) => { e.stopPropagation(); setSel((sel + 1) % CLICKS.length); }}>→</button>
+            <button className="lb-btn lb-close" aria-label="Close" onClick={() => setSel(null)}>✕</button>
+            <span className="lb-count">{sel + 1} / {CLICKS.length}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
