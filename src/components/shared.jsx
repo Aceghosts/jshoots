@@ -1,20 +1,15 @@
-import { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-  useSpring,
-} from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 export const EASE = [0.22, 1, 0.36, 1];
 
-export const fadeUp = {
-  hidden: { opacity: 0, y: 42 },
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
   show: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.9, ease: EASE, delay: i * 0.12 },
+    transition: { duration: 0.7, ease: EASE, delay: i * 0.1 },
   }),
 };
 
@@ -26,7 +21,7 @@ export function Reveal({ children, as = "div", className = "", delay = 0, ...res
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-60px" }}
       custom={delay}
       {...rest}
     >
@@ -35,109 +30,224 @@ export function Reveal({ children, as = "div", className = "", delay = 0, ...res
   );
 }
 
-/* Word-by-word masked text reveal. Pass "\n" in text for line breaks.
-   The in-view observer must sit on the heading itself: the words start
-   fully clipped by their overflow-hidden line, so observing them directly
-   never fires. */
-export function SplitText({ text, as = "h2", className = "", delay = 0 }) {
-  const reduce = useReducedMotion();
-  const Tag = motion[as] || motion.h2;
-  const container = {
-    hidden: {},
-    show: { transition: { delayChildren: delay, staggerChildren: 0.07 } },
-  };
-  const wordVariant = {
-    hidden: reduce ? { y: "0%", rotate: 0, opacity: 1 } : { y: "112%", rotate: 5, opacity: 0 },
-    show: { y: "0%", rotate: 0, opacity: 1, transition: { duration: 0.9, ease: EASE } },
-  };
+export function usePageMeta(title, description) {
+  useEffect(() => {
+    document.title = title;
+    if (description) {
+      document.querySelector('meta[name="description"]')?.setAttribute("content", description);
+    }
+  }, [title, description]);
+}
+
+/* Scrolls to top on route change, or to the #anchor if one is present. */
+export function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      setTimeout(() => document.querySelector(hash)?.scrollIntoView({ behavior: "instant" }), 200);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+  return null;
+}
+
+export function Nav() {
   return (
-    <Tag
-      className={className}
-      aria-label={text.replaceAll("\n", " ")}
-      variants={container}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
-    >
-      {text.split("\n").map((line, li) => (
-        <span className="split-line" key={li} aria-hidden="true">
-          {line.split(" ").map((word, wi, arr) => (
-            <motion.span className="split-word" key={wi} variants={wordVariant}>
-              {word}
-              {wi < arr.length - 1 ? " " : ""}
-            </motion.span>
-          ))}
-        </span>
-      ))}
-    </Tag>
+    <nav className="nav">
+      <div className="nav-inner">
+        <Link to="/" className="logo" aria-label="jshoots home">
+          <span className="j">j</span>
+          <span className="rest">shoots</span>
+          <span className="dot" />
+        </Link>
+        <div className="nav-links">
+          <NavLink to="/work">Work</NavLink>
+          <NavLink to="/family">Family</NavLink>
+          <NavLink to="/milestones">Milestones</NavLink>
+          <NavLink to="/events">Events</NavLink>
+          <NavLink to="/pricing">Pricing</NavLink>
+          <NavLink to="/studio">Studio</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
+        </div>
+        <Link to="/contact" className="nav-cta">Book a session →</Link>
+      </div>
+    </nav>
   );
 }
 
-/* Image that drifts vertically inside its frame as it scrolls through the viewport. */
-export function ParallaxImg({ src, alt, strength = 7, className = "" }) {
-  const ref = useRef(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(
-    scrollYProgress,
-    [0, 1],
-    reduce ? ["0%", "0%"] : [`-${strength}%`, `${strength}%`]
-  );
+export function CtaStrip({ title, sub, actions }) {
   return (
-    <div className={`parallax-frame ${className}`} ref={ref}>
-      <motion.img src={src} alt={alt} loading="lazy" style={{ y }} />
+    <div className="cta-strip">
+      <div className="container inner">
+        <Reveal>
+          <h2>{title}</h2>
+          {sub && <p>{sub}</p>}
+        </Reveal>
+        <Reveal className="actions" delay={1}>{actions}</Reveal>
+      </div>
     </div>
   );
 }
 
-/* Card that tilts in 3D toward the cursor. */
-export function TiltCard({ children, className = "", max = 6 }) {
-  const ref = useRef(null);
-  const reduce = useReducedMotion();
-  const rotateX = useSpring(0, { stiffness: 180, damping: 18 });
-  const rotateY = useSpring(0, { stiffness: 180, damping: 18 });
-
-  const onMove = (e) => {
-    if (reduce || !ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    rotateY.set(px * max * 2);
-    rotateX.set(-py * max * 2);
-  };
-  const onLeave = () => {
-    rotateX.set(0);
-    rotateY.set(0);
-  };
-
+export function Footer() {
   return (
-    <motion.div
-      ref={ref}
-      className={className}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-    >
-      {children}
-    </motion.div>
+    <footer>
+      <div className="container footer-grid">
+        <div className="fc">
+          <strong>jshoots</strong>
+          Perth, Western Australia
+          <br />
+          <a href="mailto:hello@jshoots.com.au">hello@jshoots.com.au</a>
+        </div>
+        <div className="fc">
+          <strong>Navigate</strong>
+          <span className="flinks">
+            <Link to="/work">Work</Link>
+            <Link to="/family">Family &amp; Portraits</Link>
+            <Link to="/milestones">Milestones</Link>
+            <Link to="/events">Events</Link>
+            <Link to="/pricing">Pricing</Link>
+            <Link to="/studio">Studio</Link>
+            <Link to="/contact">Contact</Link>
+          </span>
+        </div>
+        <div className="fc">
+          <strong>Social</strong>
+          <span className="flinks">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://behance.net" target="_blank" rel="noopener noreferrer">Behance</a>
+            <span>© 2026 jshoots</span>
+          </span>
+        </div>
+      </div>
+    </footer>
   );
 }
 
-export function RotatingBadge({ text, href = "#contact", className = "" }) {
+export function PriceTable({ rows, note }) {
   return (
-    <a href={href} className={`badge ${className}`} aria-label={text.replaceAll("·", ",")}>
-      <svg viewBox="0 0 128 128" aria-hidden="true">
-        <defs>
-          <path
-            id={`circ-${text.length}`}
-            d="M 64,64 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0"
-          />
-        </defs>
-        <text>
-          <textPath href={`#circ-${text.length}`}>{text}</textPath>
-        </text>
-      </svg>
-      <span className="arrow" aria-hidden="true">↘</span>
-    </a>
+    <>
+      <table className="pt">
+        <thead>
+          <tr><th>Session type</th><th>Starting from</th></tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.name}>
+              <td>
+                <div className="pn">{r.name}</div>
+                <div className="pd">{r.detail}</div>
+              </td>
+              <td className="pv">{r.price}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {note && <p className="price-note">{note}</p>}
+    </>
+  );
+}
+
+export function PriceCard({ c }) {
+  return (
+    <div className={`pc ${c.feat ? "feat" : ""}`}>
+      {c.badge && <span className="pc-badge">{c.badge}</span>}
+      <div className="pc-cat">{c.cat}</div>
+      <div className="pc-name">{c.name}</div>
+      <div className="pc-desc">{c.desc}</div>
+      <div className="pc-price">{c.price}</div>
+      <div className="pc-detail">{c.detail}</div>
+      {c.inc && (
+        <ul className="pc-inc">
+          {c.inc.map((x) => <li key={x}>{x}</li>)}
+        </ul>
+      )}
+      <Link className="pc-cta" to={c.to || "/contact"}>{c.cta || "Book →"}</Link>
+    </div>
+  );
+}
+
+export function TagCloud({ tags }) {
+  return (
+    <div className="tag-cloud">
+      {tags.map((t) => <span key={t}>{t}</span>)}
+    </div>
+  );
+}
+
+/* ---------- photo gallery with lightbox ---------- */
+export const CLICKS = Array.from({ length: 27 }, (_, i) => `/images/${i + 1}.jpg`);
+
+export function Gallery({ initial = 9 }) {
+  const [sel, setSel] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+  const shown = showAll ? CLICKS : CLICKS.slice(0, initial);
+
+  useEffect(() => {
+    if (sel === null) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setSel(null);
+      if (e.key === "ArrowRight") setSel((s) => (s + 1) % CLICKS.length);
+      if (e.key === "ArrowLeft") setSel((s) => (s - 1 + CLICKS.length) % CLICKS.length);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [sel]);
+
+  return (
+    <>
+      <div className="clicks-grid">
+        {shown.map((src, i) => (
+          <Reveal
+            key={src}
+            as="button"
+            className="click-item"
+            delay={i % 3}
+            onClick={() => setSel(i)}
+            aria-label={`View photo ${i + 1} full size`}
+          >
+            <img src={src} alt={`jshoots photography, Perth`} loading="lazy" />
+          </Reveal>
+        ))}
+      </div>
+      <div className="see-more-wrap">
+        <button
+          className="btn"
+          onClick={() => {
+            if (showAll) document.querySelector(".clicks-grid")?.scrollIntoView({ behavior: "instant" });
+            setShowAll(!showAll);
+          }}
+        >
+          {showAll ? "See less" : "See more"}
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {sel !== null && (
+          <motion.div
+            className="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSel(null)}
+          >
+            <motion.img
+              key={sel}
+              src={CLICKS[sel]}
+              alt="jshoots photo full size"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button className="lb-btn lb-prev" aria-label="Previous photo" onClick={(e) => { e.stopPropagation(); setSel((sel - 1 + CLICKS.length) % CLICKS.length); }}>←</button>
+            <button className="lb-btn lb-next" aria-label="Next photo" onClick={(e) => { e.stopPropagation(); setSel((sel + 1) % CLICKS.length); }}>→</button>
+            <button className="lb-btn lb-close" aria-label="Close" onClick={() => setSel(null)}>✕</button>
+            <span className="lb-count">{sel + 1} / {CLICKS.length}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
