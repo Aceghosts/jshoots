@@ -115,7 +115,8 @@ export function Footer() {
         <div className="fc">
           <strong>Social</strong>
           <span className="flinks">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.instagram.com/jshoots.au" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://wa.me/61415558960" target="_blank" rel="noopener noreferrer">WhatsApp</a>
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://behance.net" target="_blank" rel="noopener noreferrer">Behance</a>
             <span>© 2026 jshoots</span>

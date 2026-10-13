@@ -13,7 +13,8 @@ export default function Work() {
         <div className="container">
           <Reveal as="p" className="kicker">Work</Reveal>
           <Reveal as="h1" delay={1} style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>
-            Some of the work.<br />The rest is on Instagram.
+            Some of the work.<br />The rest is on{" "}
+            <a href="https://www.instagram.com/jshoots.au" target="_blank" rel="noopener noreferrer" style={{ color: "var(--coral)" }}>Instagram</a>.
           </Reveal>
         </div>
       </header>

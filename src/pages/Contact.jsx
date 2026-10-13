@@ -103,6 +103,10 @@ export default function Contact() {
                 <a href="mailto:hello@jshoots.com.au">hello@jshoots.com.au</a>
               </div>
               <div className="ci-row">
+                <span className="ci-key">WhatsApp</span>
+                <a href="https://wa.me/61415558960" target="_blank" rel="noopener noreferrer">+61 415 558 960</a>
+              </div>
+              <div className="ci-row">
                 <span className="ci-key">Based in</span>
                 Perth, Western Australia
               </div>
@@ -112,7 +116,7 @@ export default function Contact() {
               </div>
               <div className="ci-row">
                 <span className="ci-key">Social</span>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>{" · "}
+                <a href="https://www.instagram.com/jshoots.au" target="_blank" rel="noopener noreferrer">Instagram</a>{" · "}
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>{" · "}
                 <a href="https://behance.net" target="_blank" rel="noopener noreferrer">Behance</a>
               </div>
