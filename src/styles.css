@@ -59,15 +59,8 @@ h1, h2, h3 { font-family: var(--display); color: var(--ink); letter-spacing: -0.
   justify-content: space-between;
   gap: 20px;
 }
-.logo {
-  font-family: var(--display);
-  font-size: 22px;
-  display: flex;
-  align-items: baseline;
-}
-.logo .j { color: var(--coral); font-weight: 700; }
-.logo .rest { color: var(--coral); font-weight: 400; }
-.logo .dot { width: 6px; height: 6px; background: var(--coral); border-radius: 50%; margin-left: 2px; }
+.logo { display: flex; align-items: center; }
+.logo img { height: 30px; width: auto; }
 .nav-links { display: flex; gap: 26px; font-size: 14px; color: #8a8578; }
 .nav-links a:hover { color: var(--cream); }
 .nav-links a.active { color: var(--cream); border-bottom: 1px solid var(--cream); padding-bottom: 2px; }

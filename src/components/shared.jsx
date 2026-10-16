@@ -57,9 +57,7 @@ export function Nav() {
     <nav className="nav">
       <div className="nav-inner">
         <Link to="/" className="logo" aria-label="jshoots home">
-          <span className="j">j</span>
-          <span className="rest">shoots</span>
-          <span className="dot" />
+          <img src="/logo-red.png" alt="jshoots" />
         </Link>
         <div className="nav-links">
           <NavLink to="/work">Work</NavLink>
