@@ -76,6 +76,33 @@ export function Nav() {
   );
 }
 
+/* Floating contact buttons, visible on every page. */
+export function ContactFab() {
+  return (
+    <div className="fab-stack">
+      <a className="fab wa" href="https://wa.me/61415558960" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M21 12a9 9 0 0 1-13.2 8L3 21l1.1-4.7A9 9 0 1 1 21 12z" />
+          <path fill="#fff" stroke="none" d="M9.1 7.7c.3-.7 1-.8 1.4-.2l.9 1.3c.3.4.2.9-.1 1.2l-.5.6c.5 1 1.5 2 2.6 2.6l.5-.6c.3-.3.8-.4 1.2-.1l1.3.9c.6.4.5 1.1-.2 1.4-1 .4-2.2.3-3.5-.5a10.6 10.6 0 0 1-3.6-3.6c-.8-1.3-.9-2.5-.5-3.5z" />
+        </svg>
+      </a>
+      <a className="fab ig" href="https://www.instagram.com/jshoots.au" target="_blank" rel="noopener noreferrer" aria-label="Message us on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" />
+          <circle cx="12" cy="12" r="4.2" />
+          <circle cx="17.2" cy="6.8" r="1.2" fill="#fff" stroke="none" />
+        </svg>
+      </a>
+      <a className="fab ms" href="https://m.me/jshoots.au" target="_blank" rel="noopener noreferrer" aria-label="Message us on Facebook Messenger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinejoin="round" aria-hidden="true">
+          <path d="M12 2.5C6.8 2.5 2.5 6.4 2.5 11.3c0 2.8 1.3 5.2 3.5 6.8v3.4l3.2-1.8c.9.2 1.8.4 2.8.4 5.2 0 9.5-3.9 9.5-8.8S17.2 2.5 12 2.5z" />
+          <path fill="#fff" stroke="none" d="M6.3 13.8l4.2-4.4 2.5 2.3 4.6-4.1-4.2 4.5-2.5-2.3z" />
+        </svg>
+      </a>
+    </div>
+  );
+}
+
 export function CtaStrip({ title, sub, actions }) {
   return (
     <div className="cta-strip">

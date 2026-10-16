@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Nav, Footer, ScrollManager } from "./components/shared.jsx";
+import { Nav, Footer, ScrollManager, ContactFab } from "./components/shared.jsx";
 import Home from "./pages/Home.jsx";
 import Work from "./pages/Work.jsx";
 import Family from "./pages/Family.jsx";
@@ -28,6 +28,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <ContactFab />
     </BrowserRouter>
   );
 }
